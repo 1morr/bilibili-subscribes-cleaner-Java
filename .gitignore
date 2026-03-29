@@ -1,0 +1,24 @@
+# Build output
+target/
+out/
+build/
+*.class
+
+# Artifacts (do not commit binaries)
+*.jar
+*.war
+*.ear
+*.exe
+*.dll
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
