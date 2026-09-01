@@ -22,3 +22,8 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# App runtime output (this app's own generated files, not source)
+user_data_cache.json
+export_uids.json
+inactive_users_*.txt
