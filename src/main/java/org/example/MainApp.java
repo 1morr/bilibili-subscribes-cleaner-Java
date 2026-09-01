@@ -756,7 +756,7 @@ public class MainApp extends JFrame {
             // 重新按当前筛选条件重建表格：行内容（含"无影片/未知"占位文案）与左下角计数都会用新语言刷新
             updateInactiveDaysFilter();
         } else {
-            userCountLabel.setText(formatUserCountText(0, 0));
+            updateUserCountLabel(0, 0);
         }
 
         revalidate();
@@ -819,7 +819,7 @@ public class MainApp extends JFrame {
         }
         
         // 更新左下角状态栏标签，显示不活跃用户数量和总用户数量
-        userCountLabel.setText(formatUserCountText(users.size(), inactiveUsers.size()));
+        updateUserCountLabel(users.size(), inactiveUsers.size());
     }
 
     /**
@@ -831,6 +831,17 @@ public class MainApp extends JFrame {
                     String.valueOf(shown), String.valueOf(total), String.valueOf(unknownUserCount));
         }
         return Messages.format("status.count.base", String.valueOf(shown), String.valueOf(total));
+    }
+
+    /**
+     * 狀態列只放得下一句短的，所以「未確認」的完整說明走 tooltip。英文比中文長得多，
+     * 把整句寫進標籤會把右邊的匯出控制項整組擠出視窗（實測過）。
+     */
+    private void updateUserCountLabel(int shown, int total) {
+        userCountLabel.setText(formatUserCountText(shown, total));
+        userCountLabel.setToolTipText(unknownUserCount > 0
+                ? Messages.format("status.count.unknownTooltip", String.valueOf(unknownUserCount))
+                : null);
     }
 
     /**
@@ -937,7 +948,7 @@ public class MainApp extends JFrame {
         }
         
         // 更新左下角状态栏标签，显示不活跃用户数量和总用户数量
-        userCountLabel.setText(formatUserCountText(users.size(), users.size()));
+        updateUserCountLabel(users.size(), users.size());
     }
 
     public static void main(String[] args) {
